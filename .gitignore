@@ -2,7 +2,7 @@
 node_modules/
 
 # Idea
-.idea
+.idea/
 
 # Expo files
 .expo/
