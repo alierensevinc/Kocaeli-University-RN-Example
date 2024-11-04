@@ -1,7 +1,18 @@
+import React, { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 // App bileşeni, uygulamanın ana bileşenidir.
 export default function App() {
+    const [tasks, setTasks] = useState([]); // Görev listesini tutan state
+    const [taskName, setTaskName] = useState(''); // Mevcut görev adını tutan state
+
+    const addTask = () => {
+        if (taskName.trim()) {
+            setTasks([...tasks, taskName]); // Yeni görevi görevler dizisine ekle
+            setTaskName(''); // Girdi alanını temizle
+        }
+    };
+
     return (
         // Ana kapsayıcı View bileşeni
         <View style={styles.container}>
@@ -10,9 +21,19 @@ export default function App() {
             {/* Girdi alanı ve butonun bulunduğu kapsayıcı View bileşeni */}
             <View style={styles.inputContainer}>
                 {/* Görev adı için TextInput bileşeni */}
-                <TextInput style={styles.input} placeholder={'Görev Adı'} />
+                <TextInput
+                    style={styles.input}
+                    placeholder={'Görev Adı'}
+                    value={taskName}
+                    onChangeText={setTaskName}
+                />
                 {/* Ekle butonu */}
-                <Button title="Ekle" />
+                <Button title="Ekle" onPress={addTask} />
+            </View>
+            <View>
+                {tasks.map((task, index) => (
+                    <Text key={index}>{task}</Text>
+                ))}
             </View>
         </View>
     );
