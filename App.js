@@ -15,6 +15,10 @@ export default function App() {
         }
     };
 
+    const deleteTask = (index) => {
+        setTasks(tasks.filter((_, i) => i !== index)); // Belirtilen indeksteki görevi sil
+    };
+
     return (
         // Ana kapsayıcı View bileşeni
         <View style={styles.container}>
@@ -36,7 +40,9 @@ export default function App() {
             <View style={styles.listContainer}>
                 <FlashList
                     data={tasks}
-                    renderItem={({ item }) => <ListItem task={item} />}
+                    renderItem={({ item, index }) => (
+                        <ListItem task={item} onDelete={() => deleteTask(index)} />
+                    )}
                     estimatedItemSize={50}
                 />
             </View>
