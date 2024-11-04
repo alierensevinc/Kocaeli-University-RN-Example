@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
+import ListItem from './src/components/ListItem';
 
 // App bileşeni, uygulamanın ana bileşenidir.
 export default function App() {
@@ -35,7 +36,7 @@ export default function App() {
             <View style={styles.listContainer}>
                 <FlashList
                     data={tasks}
-                    renderItem={({ item }) => <Text>{item}</Text>}
+                    renderItem={({ item }) => <ListItem task={item} />}
                     estimatedItemSize={50}
                 />
             </View>
