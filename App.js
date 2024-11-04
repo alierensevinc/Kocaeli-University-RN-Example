@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 
 // App bileşeni, uygulamanın ana bileşenidir.
 export default function App() {
@@ -30,10 +31,13 @@ export default function App() {
                 {/* Ekle butonu */}
                 <Button title="Ekle" onPress={addTask} />
             </View>
-            <View>
-                {tasks.map((task, index) => (
-                    <Text key={index}>{task}</Text>
-                ))}
+            {/* Görev listesini görüntülemek için FlashList bileşeni */}
+            <View style={styles.listContainer}>
+                <FlashList
+                    data={tasks}
+                    renderItem={({ item }) => <Text>{item}</Text>}
+                    estimatedItemSize={50}
+                />
             </View>
         </View>
     );
@@ -63,5 +67,11 @@ const styles = StyleSheet.create({
         margin: 12, // Dış boşluk
         borderWidth: 1, // Kenar kalınlığı
         padding: 10, // İç boşluk
+    },
+    listContainer: {
+        flex: 1, // Kalan alanı kaplamak için esnek yerleşim
+        width: '100%', // Tam genişlik
+        paddingHorizontal: 24, // Yatay padding
+        paddingVertical: 12 // Dikey padding
     }
 });
