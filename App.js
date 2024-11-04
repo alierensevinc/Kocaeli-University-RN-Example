@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
-import {Button, Platform, StyleSheet, Text, TextInput, View} from 'react-native';
-import {FlashList} from '@shopify/flash-list';
+import React, { useState } from 'react';
+import { Button, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import ListItem from './src/components/ListItem';
+import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 
 // App bileşeni, uygulamanın ana bileşenidir.
 export default function App() {
@@ -19,9 +20,12 @@ export default function App() {
         setTasks(tasks.filter((_, i) => i !== index)); // Belirtilen indeksteki görevi sil
     };
 
+    const backgroundColor = Platform.OS === 'android' ? '#a4c639' : '#d3d3d3';
+
     return (
         // Ana kapsayıcı View bileşeni
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor }]}>
+            <ExpoStatusBar backgroundColor={backgroundColor}/>
             {/* Başlık metni */}
             <Text style={styles.title}>TO DO Uygulaması</Text>
             {/* Girdi alanı ve butonun bulunduğu kapsayıcı View bileşeni */}
@@ -34,14 +38,14 @@ export default function App() {
                     onChangeText={setTaskName}
                 />
                 {/* Ekle butonu */}
-                <Button title="Ekle" onPress={addTask}/>
+                <Button title="Ekle" onPress={addTask} />
             </View>
             {/* Görev listesini görüntülemek için FlashList bileşeni */}
             <View style={styles.listContainer}>
                 <FlashList
                     data={tasks}
-                    renderItem={({item, index}) => (
-                        <ListItem task={item} onDelete={() => deleteTask(index)}/>
+                    renderItem={({ item, index }) => (
+                        <ListItem task={item} onDelete={() => deleteTask(index)} />
                     )}
                     estimatedItemSize={50}
                 />
@@ -54,10 +58,9 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1, // Esnek yerleşim
-        backgroundColor: Platform.OS === 'android' ? '#a4c639' : '#d3d3d3', // Platforma göre arka plan rengi
         alignItems: 'center', // Yatayda ortalama
         justifyContent: 'flex-start', // Dikeyde başa hizalama
-        marginTop: 36 // Üstten boşluk
+        paddingTop: 36 // Üstten boşluk
     },
     title: {
         fontSize: 20, // Yazı boyutu
